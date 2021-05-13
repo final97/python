@@ -2,7 +2,7 @@
 
 import sys
 
-sys.path.append("/Users/final97/apps/workspace-python/my_project")
+sys.path.append("/Users/final97/apps/workspace-mypython")
 import config
 
 class ConfigLoader:

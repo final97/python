@@ -9,8 +9,7 @@ import requests
 import configLoader
 import browserUserAgent as bua
 from bs4 import BeautifulSoup
-from datetime import *
-from pytz import timezone
+from datetime import datetime, timedelta, timezone
 
 
 class ProxyClass:
@@ -20,10 +19,11 @@ class ProxyClass:
         
     def isProxy(self):
         if os.path.isfile(self.proxyPath) :
-            print(datetime.now(pytz.timezone.utc)))
-            print(datetime.utcfromtimestamp(os.path.getmtime(self.proxyPath)))
-            print(datetime.now() - datetime.utcfromtimestamp(os.path.getmtime(self.proxyPath)))
-            if datetime.now() - datetime.utcfromtimestamp(os.path.getmtime(self.proxyPath)) < timedelta(hours=24):
+            KST = timezone(timedelta(hours=9))
+            nowTime = datetime.now(KST)
+            fileTime = datetime.fromtimestamp(os.path.getmtime(self.proxyPath), KST)
+            ## 24시간이 지나면 false
+            if nowTime - fileTime < timedelta(hours=24):
                 return True
         
         return False
@@ -33,7 +33,6 @@ class ProxyClass:
             return json.load(f1)
 
     def getURLProxyData(self):
-
         agent = bua.BrowserUserAgent()
         browser = agent.getDriver()
 
@@ -50,7 +49,7 @@ class ProxyClass:
                 tds = tr.children
                 td = list(tds)
             except Exception as e:
-                print(e)
+                # print(e)
                 break
       
             # 헤더 2칸 스킵
