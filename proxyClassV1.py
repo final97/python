@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
 
 
-class ProxyClass:
+class ProxyClassV1:
     def __init__(self):
         self.targetUrl = configLoader.ConfigLoader.Loader.Proxy.PROXY_URL
         self.proxyPath = configLoader.ConfigLoader.Loader.Proxy.PROXY_PATH
@@ -71,16 +71,21 @@ class ProxyClass:
         return proxyJson
     
     # json 타입으로 리턴한다.
-    def getProxy(self):
+    def getProxys(self):
         if self.isProxy() :
             return self.loadProxy()
         else :
             return self.getURLProxyData()
         
-
+    # json 타입으로 리턴한다.
+    def getProxy(self):
+        proxylist = self.getProxys()
+        return proxylist[random.randrange(0,len(proxylist))]
+        
 if __name__ == "__main__":
     proxy = ProxyClass()
-    j = json.loads(proxy.getProxy())
+    # j = json.loads(proxy.getProxys())
+    print(proxy.getProxy())
 
     # for row in j:
     #     print(row)

@@ -13,8 +13,8 @@ from selenium.common.exceptions import TimeoutException
 class BrowserUserAgent:
     def __init__(self):
         # 설정파일 읽기
+        self.browser = None
         self.chromepath = configLoader.ConfigLoader.Loader.ChromeDriver.DRIVER_PATH
-
         self.browerUserAgentList = [
                               "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
                             , "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14A346 Safari/E7FBAF"
@@ -74,18 +74,27 @@ class BrowserUserAgent:
     def getChromeOptions(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument(self.getBrowerUserAgent())
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
+        # chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--no-sandbox')
+        # chrome_options.add_argument('--disable-dev-shm-usage')
         return chrome_options
 
-    def getDriver(self):
+    def getDriver(self, *arglist):
         chrome_options = self.getChromeOptions()
-        browser = webdriver.Chrome(executable_path=self.chromepath, chrome_options=chrome_options)
+        if arglist:
+            chrome_options.add_argument('--proxy-server={}'.format(arglist[0]))
 
-        return browser
+        self.browser = webdriver.Chrome(executable_path=self.chromepath, chrome_options=chrome_options)
+
+        return self.browser
+    
+    def close(self):
+        if self.browser != None:
+            self.browser.close()
                 
 
 if __name__ == "__main__":
     agent = BrowserUserAgent()
+    browser = agent.getDriver()
+    agent.close()
     print(agent.getBrowerUserAgent())
