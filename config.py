@@ -12,6 +12,7 @@ class Config:
     class Proxy:
         PROXY_URL = "https://spys.one/en/free-proxy-list/"
         PROXY_PATH = WORK_PATH + "/proxy_list"
+        PROXY_SELECTOR = "body > table:nth-child(3) > tbody > tr:nth-child(4) > td > table > tbody"
 
 
 if __name__ == "__main__":

@@ -74,15 +74,16 @@ class BrowserUserAgent:
     def getChromeOptions(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument(self.getBrowerUserAgent())
-        # chrome_options.add_argument('--headless')
-        # chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument('--disable-dev-shm-usage')
+        # chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--no-sandbox")
+        # chrome_options.add_argument("--disable-dev-shm-usage")
         return chrome_options
 
     def getDriver(self, *arglist):
         chrome_options = self.getChromeOptions()
         if arglist:
-            chrome_options.add_argument('--proxy-server={}'.format(arglist[0]))
+            chrome_options.add_argument("--proxy-server={}".format(arglist[0]))
+            print("--proxy-server={}".format(arglist[0]))
 
         self.browser = webdriver.Chrome(executable_path=self.chromepath, chrome_options=chrome_options)
 

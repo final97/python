@@ -16,6 +16,7 @@ class ProxyClassV1:
     def __init__(self):
         self.targetUrl = configLoader.ConfigLoader.Loader.Proxy.PROXY_URL
         self.proxyPath = configLoader.ConfigLoader.Loader.Proxy.PROXY_PATH
+        self.proxySelector = configLoader.ConfigLoader.Loader.Proxy.PROXY_SELECTOR
         
     def isProxy(self):
         if os.path.isfile(self.proxyPath) :
@@ -39,7 +40,7 @@ class ProxyClassV1:
         browser.get(self.targetUrl)
         browser.implicitly_wait(5)
         bs4 = BeautifulSoup(browser.page_source, "lxml")
-        tables = bs4.select("body > table:nth-child(3) > tbody > tr:nth-child(4) > td > table > tbody")
+        tables = bs4.select(self.proxySelector)
 
         proxyList = []
 
@@ -79,11 +80,11 @@ class ProxyClassV1:
         
     # json 타입으로 리턴한다.
     def getProxy(self):
-        proxylist = self.getProxys()
-        return proxylist[random.randrange(0,len(proxylist))]
+        proxylist = json.loads(self.getProxys())
+        return proxylist[random.randrange(0,len(proxylist))]["ip_port"]
         
 if __name__ == "__main__":
-    proxy = ProxyClass()
+    proxy = ProxyClassV1()
     # j = json.loads(proxy.getProxys())
     print(proxy.getProxy())
 

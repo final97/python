@@ -1,29 +1,28 @@
 # -*- coding: utf-8 -*-
 
 import os
-import configLoader
 import proxyClassV1 as pc
 import browserUserAgent as bua
 
 class ChromeLoader:
 
     def __init__(self):
-         self.agent = None
+         self.browser = None
 
     def __del__(self):
-        # self.close()
-        pass
+        self.close()
 
     def getBrower(self):
         proxy = pc.ProxyClassV1()
-        self.agent = bua.BrowserUserAgent()
-        browser = self.agent.getDriver(proxy.getProxy())
+        agent = bua.BrowserUserAgent()
+        print("proxy.getProxy()...{}".format(proxy.getProxy()))
+        self.browser = agent.getDriver(proxy.getProxy())
 
-        return browser
+        return self.browser
 
     def close(self):
-        print("self.browser")
-        self.agent.close()
+        if self.browser != None and not self.browser :
+            self.browser.close()
 
 
 if __name__ == "__main__":
