@@ -85,7 +85,7 @@ class BrowserUserAgent:
             chrome_options.add_argument("--proxy-server={}".format(arglist[0]))
             print("--proxy-server={}".format(arglist[0]))
 
-        self.browser = webdriver.Chrome(executable_path=self.chromepath, chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(executable_path=self.chromepath, options=chrome_options)
 
         return self.browser
     
@@ -97,5 +97,5 @@ class BrowserUserAgent:
 if __name__ == "__main__":
     agent = BrowserUserAgent()
     browser = agent.getDriver()
-    agent.close()
     print(agent.getBrowerUserAgent())
+    agent.close()
