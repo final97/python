@@ -4,6 +4,7 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # SSL 인증 Warning 스킵
 
+# https://developers.kakao.com/tool/rest-api/open/get/v2-search-web
 
 class ClassDaumWeb:
     def __init__(self, header, query, url):
